@@ -1,0 +1,56 @@
+{% load static %}
+
+<main class="col-md-9">
+    <header class="border-bottom mb-4 pb-3">
+        <div class="form-inline">
+            <span class="mr-md-auto">Found <b>{{product_count}}</b> items </span>
+        </div>
+    </header>
+    <!-- sect-heading -->
+    <div class="row">
+        <!-- Product -->
+        {% if products %}
+            {% for product in products  %}
+                <div class="col-md-4">
+                    <figure class="card card-product-grid">
+                        <div class="img-wrap"> 
+                            <a href="{{product.get_absolute_url}}" class="img-wrap">
+                            <img src="{{product.images.url}}">
+                            </a>
+                        </div>
+                        <!-- img-wrap.// -->
+                        <figcaption class="info-wrap">
+                            <div class="fix-height">
+                                <a href="{{product.get_absolute_url}}" class="title">{{product.product_name|capfirst}}</a>
+                                <div class="price-wrap mt-2">
+                                    <span class="price">${{product.price_discount}}</span>
+                                    <del class="price-old">${{product.price}}</del>
+                                </div>
+                                <!-- price-wrap.// -->
+                            </div>
+                            <a href="{% url 'cart:cart_page' %}" class="btn btn-block btn-primary">Added to cart </a>
+                        </figcaption>
+                    </figure>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-md-12">
+               <div class="alert alert-warning" role="alert">
+              No product found with that category.  
+            </div>
+            <div class="col-md-4">
+                <p><a href="{% url 'store:store_page'%}">Return to store &larr;</a></p>
+            </div>   
+            </div>
+              
+        {% endif %}
+        
+
+        <!-- Product end -->
+    </div>
+    <!-- row end.// -->
+    
+    <!-- Pagination -->
+    {% include "./pagination.html" %}
+    <!-- Pagination end -->
+</main>
